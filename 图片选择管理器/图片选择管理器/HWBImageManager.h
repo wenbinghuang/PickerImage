@@ -38,14 +38,13 @@
 /// Single Method
 + (instancetype)manager;
 
-/// Not use method
-- (instancetype)init NS_UNAVAILABLE;
 
 /// Return YES if Authorized
 - (BOOL)authorizationStatusAuthorized;
 
 /// Get Authorization State
 - (NSInteger)authorizationStatus;
+
 
 
 
