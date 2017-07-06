@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04E6DFFD1F0E274A00343FAC /* HWBImageCropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6DFFC1F0E274A00343FAC /* HWBImageCropManager.m */; };
 		04EC45601F0A1C320086C42D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC455F1F0A1C320086C42D /* main.m */; };
 		04EC45631F0A1C320086C42D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC45621F0A1C320086C42D /* AppDelegate.m */; };
 		04EC45661F0A1C320086C42D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC45651F0A1C320086C42D /* ViewController.m */; };
@@ -29,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04E6DFFB1F0E274A00343FAC /* HWBImageCropManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWBImageCropManager.h; sourceTree = "<group>"; };
+		04E6DFFC1F0E274A00343FAC /* HWBImageCropManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWBImageCropManager.m; sourceTree = "<group>"; };
 		04EC455B1F0A1C320086C42D /* 图片选择管理器.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "图片选择管理器.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04EC455F1F0A1C320086C42D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04EC45611F0A1C320086C42D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -94,6 +97,8 @@
 				04EC45651F0A1C320086C42D /* ViewController.m */,
 				04EC45841F0A1EFC0086C42D /* HWBImageManager.h */,
 				04EC45851F0A1EFC0086C42D /* HWBImageManager.m */,
+				04E6DFFB1F0E274A00343FAC /* HWBImageCropManager.h */,
+				04E6DFFC1F0E274A00343FAC /* HWBImageCropManager.m */,
 				04EC45831F0A1D650086C42D /* ManagerConfigure.h */,
 				04EC45871F0A1FDE0086C42D /* HWBAssetModel.h */,
 				04EC45881F0A1FDE0086C42D /* HWBAssetModel.m */,
@@ -230,6 +235,7 @@
 				04EC45601F0A1C320086C42D /* main.m in Sources */,
 				04EC45891F0A1FDE0086C42D /* HWBAssetModel.m in Sources */,
 				04EC45861F0A1EFC0086C42D /* HWBImageManager.m in Sources */,
+				04E6DFFD1F0E274A00343FAC /* HWBImageCropManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +426,7 @@
 				04EC457F1F0A1C320086C42D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		04EC45801F0A1C320086C42D /* Build configuration list for PBXNativeTarget "图片选择管理器Tests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +435,7 @@
 				04EC45821F0A1C320086C42D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
