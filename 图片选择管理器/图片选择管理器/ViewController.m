@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "NSString+Localized.h"
+#import "ImagePickerViewController.h"
 
 @interface ViewController ()
 
@@ -16,12 +18,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+//    NSLog(@"%@",[NSString localizedStringfForKey:@"Full image"]);
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    ImagePickerViewController *image = [[ImagePickerViewController alloc] initWithMaxImagesCount:10 delegate:self];
+    [self presentViewController:image animated:YES completion:nil];
 }
 
 
