@@ -17,3 +17,8 @@
 @property (nonatomic, assign) BOOL isHideTakePhoneButton;
 @property (nonatomic, copy) void (^backButtonClickHandle)(HWBAlbumModel *model);
 @end
+
+@interface CollectionView : UICollectionView
+
+
+@end

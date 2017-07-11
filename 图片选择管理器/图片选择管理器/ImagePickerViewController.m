@@ -11,6 +11,7 @@
 #import "HWBAssetModel.h"
 #import "HWBImageManager.h"
 #import "NSString+Localized.h"
+#import "PhotoPickerController.h"
 
 @interface ImagePickerViewController () {
 
@@ -102,7 +103,6 @@
             [self setupUnAuthorized];
         else
             [self pushPhotoPickerVC];
-        
     }
     
     return self;
@@ -138,7 +138,14 @@
     
     _didPushPhotoPickerVc = NO;
     if (!_didPushPhotoPickerVc && _pushPhotoPickerVc) {
-        
+        PhotoPickerController *photoPickerVC = [[PhotoPickerController alloc] init];
+        photoPickerVC.isFirstAppear = YES;
+        photoPickerVC.columnNumber = self.columnNumber;
+        [[HWBImageManager manager] getCameraRollAlbum:self.allowPickingVideo allowPickingImage:self.allowPickingImage completion:^(HWBAlbumModel *model) {
+            photoPickerVC.model = model;
+            [self pushViewController:photoPickerVC animated:YES];
+            _didPushPhotoPickerVc = YES;
+        }];
     }
 }
 
@@ -185,7 +192,7 @@
     self.processHintStr = [NSString localizedStringfForKey:@"Processing..."];
 }
 
-#pragma mark ettingBtn
+#pragma mark SettingBtnClick
 - (void)settingBtnClick {
     if (iOS8Later) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
@@ -201,7 +208,6 @@
             [alertController addAction:sure];
             
             [self presentViewController:alertController animated:YES completion:nil];
-                                                  
         }
     }
 }

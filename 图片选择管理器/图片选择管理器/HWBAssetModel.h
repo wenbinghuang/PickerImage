@@ -41,9 +41,13 @@ typedef enum : NSUInteger {
 @interface HWBAlbumModel : NSObject
 
 ///Properties
-@property (nonatomic, copy)   NSString *name;                        ///< The album name
-@property (nonatomic, assign) NSInteger count;                       ///< Count of photos the album contain
-@property (nonatomic, strong) id result;                            ///< PHFetchResult<PHAsset> or ALAssetsGroup<ALAsset>
+///The album name
+@property (nonatomic, copy)   NSString *name;
+
+///Count of photos the album contain
+@property (nonatomic, assign) NSInteger count;
+///< PHFetchResult<PHAsset> or ALAssetsGroup<ALAsset>
+@property (nonatomic, strong) id result;
 
 @property (nonatomic, strong) NSArray *models;
 @property (nonatomic, strong) NSArray *selectedModels;
