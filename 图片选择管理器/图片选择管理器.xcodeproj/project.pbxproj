@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		04E1303C1F14809400574FD7 /* NSString+Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E1303B1F14809400574FD7 /* NSString+Localized.m */; };
 		04E1303F1F14B89E00574FD7 /* PhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E1303E1F14B89E00574FD7 /* PhotoPickerController.m */; };
+		04E680841F161E4F0030D28B /* AssetCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E680831F161E4F0030D28B /* AssetCollectionViewCell.m */; };
+		04E680871F161E7D0030D28B /* AssetCameraCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E680861F161E7D0030D28B /* AssetCameraCollectionViewCell.m */; };
 		04E6DFFD1F0E274A00343FAC /* HWBImageCropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6DFFC1F0E274A00343FAC /* HWBImageCropManager.m */; };
 		04EAE4761F1330CD00D271BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04EAE4781F1330CD00D271BE /* Localizable.strings */; };
 		04EAE47C1F133FE700D271BE /* ImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EAE47B1F133FE700D271BE /* ImagePickerViewController.m */; };
@@ -38,6 +40,10 @@
 		04E1303B1F14809400574FD7 /* NSString+Localized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Localized.m"; sourceTree = "<group>"; };
 		04E1303D1F14B89E00574FD7 /* PhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerController.h; sourceTree = "<group>"; };
 		04E1303E1F14B89E00574FD7 /* PhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerController.m; sourceTree = "<group>"; };
+		04E680821F161E4F0030D28B /* AssetCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetCollectionViewCell.h; sourceTree = "<group>"; };
+		04E680831F161E4F0030D28B /* AssetCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetCollectionViewCell.m; sourceTree = "<group>"; };
+		04E680851F161E7D0030D28B /* AssetCameraCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetCameraCollectionViewCell.h; sourceTree = "<group>"; };
+		04E680861F161E7D0030D28B /* AssetCameraCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetCameraCollectionViewCell.m; sourceTree = "<group>"; };
 		04E6DFFB1F0E274A00343FAC /* HWBImageCropManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWBImageCropManager.h; sourceTree = "<group>"; };
 		04E6DFFC1F0E274A00343FAC /* HWBImageCropManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWBImageCropManager.m; sourceTree = "<group>"; };
 		04EAE4721F13303600D271BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -113,6 +119,10 @@
 				04E1303E1F14B89E00574FD7 /* PhotoPickerController.m */,
 				04EC45641F0A1C320086C42D /* ViewController.h */,
 				04EC45651F0A1C320086C42D /* ViewController.m */,
+				04E680821F161E4F0030D28B /* AssetCollectionViewCell.h */,
+				04E680831F161E4F0030D28B /* AssetCollectionViewCell.m */,
+				04E680851F161E7D0030D28B /* AssetCameraCollectionViewCell.h */,
+				04E680861F161E7D0030D28B /* AssetCameraCollectionViewCell.m */,
 				04EC45841F0A1EFC0086C42D /* HWBImageManager.h */,
 				04EC45851F0A1EFC0086C42D /* HWBImageManager.m */,
 				04E6DFFB1F0E274A00343FAC /* HWBImageCropManager.h */,
@@ -253,11 +263,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E1303F1F14B89E00574FD7 /* PhotoPickerController.m in Sources */,
+				04E680841F161E4F0030D28B /* AssetCollectionViewCell.m in Sources */,
 				04EC45661F0A1C320086C42D /* ViewController.m in Sources */,
 				04E1303C1F14809400574FD7 /* NSString+Localized.m in Sources */,
 				04EC45631F0A1C320086C42D /* AppDelegate.m in Sources */,
 				04EC45601F0A1C320086C42D /* main.m in Sources */,
 				04EC45891F0A1FDE0086C42D /* HWBAssetModel.m in Sources */,
+				04E680871F161E7D0030D28B /* AssetCameraCollectionViewCell.m in Sources */,
 				04EC45861F0A1EFC0086C42D /* HWBImageManager.m in Sources */,
 				04EAE47C1F133FE700D271BE /* ImagePickerViewController.m in Sources */,
 				04E6DFFD1F0E274A00343FAC /* HWBImageCropManager.m in Sources */,

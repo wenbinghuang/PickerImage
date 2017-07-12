@@ -273,6 +273,27 @@
     }
 }
 
+- (void)callDelegateMethod {
+    if ([self.pickerDelegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+        [self.pickerDelegate imagePickerControllerDidCancel:self];
+    }
+    
+    if (self.imagePickerControllerDidCancelHandle) {
+        self.imagePickerControllerDidCancelHandle();
+    }
+}
+
+#pragma mark Public
+- (void)cancelButtonClick {
+    if (self.autoDismiss) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self callDelegateMethod];
+        }];
+    } else {
+        [self callDelegateMethod];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
