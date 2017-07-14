@@ -110,7 +110,7 @@ static CGSize AssetGridThumbnailSize;
     _showTakePhotoBtn = (imagePickerVC.allowTakePicture && [[HWBImageManager manager] isCameraRollAlbum:_model.name]);
     [_models removeAllObjects];
     _models = nil;
-    if (imagePickerVC.sortAscendingByModificationDate && _isFirstAppear && iOS8Later) {
+    if (!imagePickerVC.sortAscendingByModificationDate && _isFirstAppear && iOS8Later) {
         [[HWBImageManager manager] getCameraRollAlbum:imagePickerVC.allowPickingVideo allowPickingImage:imagePickerVC.allowPickingImage completion:^(HWBAlbumModel *model) {
             _model = model;
             _models = [NSMutableArray arrayWithArray:model.models];
@@ -179,12 +179,46 @@ static CGSize AssetGridThumbnailSize;
 }
 
 - (void)configBottomToolBar {
-
+    ImagePickerViewController *imagePickerVC = (ImagePickerViewController *)self.navigationController;
+    if (!imagePickerVC.showSelectBtn) return;
 }
+
+#pragma mark UICollectionViewDataSource && Delegate 
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (_showTakePhotoBtn) {
+        ImagePickerViewController *imagePickerVC = (ImagePickerViewController *)self.navigationController;
+        if (imagePickerVC.allowPickingImage && imagePickerVC.allowTakePicture)
+            return _models.count + 1;
+    }
+    return _models.count;
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    ImagePickerViewController *imagePickerVC = (ImagePickerViewController *)self.navigationController;
+    /// the cell lead to take a picture
+    if (((imagePickerVC.sortAscendingByModificationDate && indexPath.row >= _models.count) || (!imagePickerVC.sortAscendingByModificationDate && indexPath == 0)) && _showTakePhotoBtn) {
+        AssetCameraCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AssetCameraCollectionViewCell" forIndexPath:indexPath];
+        cell.imageView.image = [UIImage imageNamed:imagePickerVC.takePictureImageName];
+        return cell;
+    }
+    
+    /// the cell dipaly photo or video
+    AssetCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AssetCollectionViewCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor blackColor];
+    return cell;
+}
+
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 
 - (void)scrollCollectionViewToBottom {
-
+    
 }
+
 
 
 
