@@ -12,10 +12,11 @@
 #import "HWBAssetModel.h"
 #import "HWBImageManager.h"
 #import "NSString+Localized.h"
-#import "AssetCameraCollectionViewCell.h"
 #import "AssetCollectionViewCell.h"
+#import "UIView+Layout.h"
+#import "VideoPlayerController.h"
 
-@interface PhotoPickerController () <UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate>{
+@interface PhotoPickerController () <UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
     NSMutableArray <HWBAssetModel *>*_models;
     UIButton *_previewButton;
     UIButton *_doneButton;
@@ -205,15 +206,133 @@ static CGSize AssetGridThumbnailSize;
     
     /// the cell dipaly photo or video
     AssetCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AssetCollectionViewCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor blackColor];
+    cell.photoDefImageName = imagePickerVC.photoDefImageName;
+    cell.photoSelImageName = imagePickerVC.photoSelImageName;
+    HWBAssetModel * model = nil;
+    if (imagePickerVC.sortAscendingByModificationDate || !_showTakePhotoBtn) {
+        model = _models[indexPath.row];
+    } else {
+        model = _models[indexPath.row - 1];
+    }
+    cell.allowPickingGif = imagePickerVC.allowPickingGif;
+    cell.model = model;
+    cell.showSelectBtn = imagePickerVC.showSelectBtn;
+    
+    if (!imagePickerVC.allowPreview)
+        cell.selectPhotoButton.frame = cell.bounds;
+    
+    __weak typeof(cell) weakCell = cell;
+    __weak typeof(self) weakSelf = self;
+    __weak typeof(_numberImageView.layer) weakLayer = _numberImageView.layer;
+    
+    cell.didSelectPhotoBlock = ^(BOOL isSelected) {
+        ImagePickerViewController *imagePickerViewController = (ImagePickerViewController *)weakSelf.navigationController;
+        if (isSelected) {
+            weakCell.selectPhotoButton.selected = NO;
+            model.isSelected = NO;
+            NSArray *selectedModels = [NSArray arrayWithArray:imagePickerViewController.selectedModels];
+            for (HWBAssetModel *model_item in selectedModels) {
+                if ([[[HWBImageManager manager] getAssetIdentifier:model.asset] isEqualToString:[[HWBImageManager manager] getAssetIdentifier:model_item.asset]]) {
+                    [imagePickerViewController.selectedModels removeObject:model_item];
+                    break;
+                }
+            }
+            [weakSelf refreshBottomToolBarStatus];
+        } else {
+            if (imagePickerViewController.selectedModels.count < imagePickerViewController.maxImagesCount) {
+                weakCell.selectPhotoButton.selected = YES;
+                model.isSelected = YES;
+                [imagePickerViewController.selectedModels addObject:model];
+                [weakSelf refreshBottomToolBarStatus];
+            } else {
+                NSString *title = [NSString stringWithFormat:[NSString localizedStringfForKey:@"Select a maximum of %zd photos"], imagePickerViewController.maxImagesCount];
+                [imagePickerViewController showAlertWithTitle:title];
+            }
+        }
+        [UIView showOscillatoryAnimationWithLayer:weakLayer type:OscillatoryAnimationToSmaller];
+    };
     return cell;
+}
+
+- (void)refreshBottomToolBarStatus {
+
 }
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    ImagePickerViewController *imagePickerVC = (ImagePickerViewController *)self.navigationController;
+    /// take a photo
+    if (((imagePickerVC.sortAscendingByModificationDate && indexPath.row >= _models.count) || (!imagePickerVC.sortAscendingByModificationDate && indexPath.row == 0)) && _showTakePhotoBtn) {
+        [self takePhoto];
+        return;
+    }
     
+    NSInteger index = indexPath.row;
+    if (!imagePickerVC.sortAscendingByModificationDate && _showTakePhotoBtn) {
+        index = indexPath.row - 1;
+    }
+    HWBAssetModel *model = _models[index];
+    if (model.type == HWBAssetModelMediaTypeVideo) {
+        if (imagePickerVC.selectedModels.count > 0) {
+             [imagePickerVC showAlertWithTitle:[NSString localizedStringfForKey:@"Can not choose both video and photo"]];
+        } else {
+            VideoPlayerController *videoPlayerVc = [[VideoPlayerController alloc] init];
+            videoPlayerVc.model = model;
+            [self.navigationController pushViewController:videoPlayerVc animated:YES];
+        }
+    }
 }
 
+- (void)takePhoto {
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS7Later) {
+        [self showMessage];
+        
+    } else {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
+            self.imagePickerVc.sourceType = sourceType;
+            if (iOS8Later) {
+                _imagePickerVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+            }
+            [self presentViewController: self.imagePickerVc animated:YES completion:nil];
+        } else {
+        NSLog(@"模拟器中无法打开照相机,请在真机中使用");
+        }
+    }
+}
+
+
+- (void)showMessage {
+    NSString *appName = [[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleDisplayName"];
+    if (!appName) appName = [[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleName"];
+    NSString *message = [NSString stringWithFormat:[NSString localizedStringfForKey:@"Please allow %@ to access your camera in \"Settings -> Privacy -> Camera\""], appName];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString localizedStringfForKey:@"Can not use camera"] message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[NSString localizedStringfForKey:@"Cancel"] style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:[NSString localizedStringfForKey:@"Setting"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (iOS8Later) {
+            BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            if (canOpen) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            }
+        } else {
+            NSURL *privacyUrl = [NSURL URLWithString:@"prefs:root=Privacy&path=CAMERA"];
+            if ([[UIApplication sharedApplication] canOpenURL:privacyUrl]) {
+                [[UIApplication sharedApplication] openURL:privacyUrl];
+            } else {
+                NSString *message = [NSString localizedStringfForKey:@"Can not jump to the privacy settings page, please go to the settings page by self, thank you"];
+                UIAlertController *controller = [UIAlertController alertControllerWithTitle:[NSString localizedStringfForKey:@"Sorry"] message:message preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *canCel = [UIAlertAction actionWithTitle:[NSString localizedStringfForKey:@"Sorry"] style:UIAlertActionStyleCancel handler:nil];
+                [controller addAction:canCel];
+                [self presentViewController:controller animated:YES completion:nil];
+                
+            }
+        }
+    }];
+    [alertController addAction:cancelAction];
+    [alertController addAction:sureAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 
 - (void)scrollCollectionViewToBottom {
     

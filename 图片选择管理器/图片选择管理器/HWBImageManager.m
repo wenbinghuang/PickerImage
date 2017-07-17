@@ -110,7 +110,7 @@
 
 #pragma mark Get Album
 - (void)getCameraRollAlbum:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void (^)(HWBAlbumModel *))completion {
-    __block HWBAlbumModel *model;
+    __block HWBAlbumModel *model = nil;
     
     if (iOS8Later) {
         PHFetchOptions *fetchOption = [self getOptionsWithAllowPickingVideo:allowPickingVideo allowPickingImage:allowPickingImage];
@@ -123,7 +123,7 @@
                 continue;
             
             if ([self isCameraRollAlbum:collection.localizedTitle]) {
-                PHFetchResult *fetchResult = [PHAsset fetchKeyAssetsInAssetCollection:collection options:fetchOption];
+                PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:fetchOption];
                 model = [self modelWithResult:fetchResult name:collection.localizedTitle];
                 if (completion)
                     completion(model);

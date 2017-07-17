@@ -195,7 +195,10 @@
 #pragma mark SettingBtnClick
 - (void)settingBtnClick {
     if (iOS8Later) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        if (canOpen) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        }
     } else {
         NSURL *privacyUrl = [NSURL URLWithString:@"prefs:root=Privacy&path=PHOTOS"];
         if ([[UIApplication sharedApplication] canOpenURL:privacyUrl]) {

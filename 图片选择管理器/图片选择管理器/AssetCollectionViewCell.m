@@ -34,6 +34,55 @@
 }
 
 
+- (void)setModel:(HWBAssetModel *)model {
+    _model = model;
+    if (iOS8Later)
+        self.representedAssetIdentifier = [[HWBImageManager manager] getAssetIdentifier:model.asset];
+    
+    PHImageRequestID imageRequestID = [[HWBImageManager manager] getPhotoWithAsset:model.asset networkAccessAllowed:NO photoWidth:self.bounds.size.width completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+        
+        if (!iOS8Later) {
+            self.imageView.image = photo;
+            return ;
+        }
+        
+        if ([self.representedAssetIdentifier isEqualToString:[[HWBImageManager manager] getAssetIdentifier:model.asset]]) {
+           
+            self.imageView.image = photo;
+            
+        } else {
+            
+            [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
+        }
+        
+        if (!isDegraded)
+            self.imageRequestID = 0;
+        
+    } progressHandler:nil];
+    
+    if (imageRequestID && self.imageRequestID && imageRequestID != self.imageRequestID) {
+        
+        [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
+    }
+    
+    self.imageRequestID = imageRequestID;
+    self.selectPhotoButton.selected = model.isSelected;
+    self.selectImageView.image = self.selectPhotoButton.isSelected ? [UIImage imageNamed:self.photoSelImageName] : [UIImage imageNamed:self.photoDefImageName];
+    [self showTypeWithModel:model];
+    if (![[HWBImageManager manager] isPhotoSelectableWithAsset:model.asset]) {
+        if (self.selectImageView.hidden == NO) {
+            self.selectPhotoButton.hidden = YES;
+            self.selectImageView.hidden = YES;
+        }
+    }
+    
+}
+
+
+- (void)showTypeWithModel:(HWBAssetModel *)model {
+
+}
+
 
 - (UIButton *)selectPhotoButton {
     if (!_selectPhotoButton) {

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04C372D31F18BEC200191357 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C372D21F18BEC200191357 /* UIView+Layout.m */; };
+		04E125AB1F1CB45400C88330 /* VideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E125AA1F1CB45400C88330 /* VideoPlayerController.m */; };
 		04E1303C1F14809400574FD7 /* NSString+Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E1303B1F14809400574FD7 /* NSString+Localized.m */; };
 		04E1303F1F14B89E00574FD7 /* PhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E1303E1F14B89E00574FD7 /* PhotoPickerController.m */; };
 		04E680841F161E4F0030D28B /* AssetCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E680831F161E4F0030D28B /* AssetCollectionViewCell.m */; };
@@ -38,6 +39,8 @@
 /* Begin PBXFileReference section */
 		04C372D11F18BEC200191357 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
 		04C372D21F18BEC200191357 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
+		04E125A91F1CB45400C88330 /* VideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerController.h; sourceTree = "<group>"; };
+		04E125AA1F1CB45400C88330 /* VideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerController.m; sourceTree = "<group>"; };
 		04E1303A1F14809400574FD7 /* NSString+Localized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Localized.h"; sourceTree = "<group>"; };
 		04E1303B1F14809400574FD7 /* NSString+Localized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Localized.m"; sourceTree = "<group>"; };
 		04E1303D1F14B89E00574FD7 /* PhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerController.h; sourceTree = "<group>"; };
@@ -117,6 +120,8 @@
 				04EAE47B1F133FE700D271BE /* ImagePickerViewController.m */,
 				04E1303D1F14B89E00574FD7 /* PhotoPickerController.h */,
 				04E1303E1F14B89E00574FD7 /* PhotoPickerController.m */,
+				04E125A91F1CB45400C88330 /* VideoPlayerController.h */,
+				04E125AA1F1CB45400C88330 /* VideoPlayerController.m */,
 				04EC45641F0A1C320086C42D /* ViewController.h */,
 				04EC45651F0A1C320086C42D /* ViewController.m */,
 				04E680821F161E4F0030D28B /* AssetCollectionViewCell.h */,
@@ -267,6 +272,7 @@
 				04E1303C1F14809400574FD7 /* NSString+Localized.m in Sources */,
 				04EC45631F0A1C320086C42D /* AppDelegate.m in Sources */,
 				04EC45601F0A1C320086C42D /* main.m in Sources */,
+				04E125AB1F1CB45400C88330 /* VideoPlayerController.m in Sources */,
 				04EC45891F0A1FDE0086C42D /* HWBAssetModel.m in Sources */,
 				04EC45861F0A1EFC0086C42D /* HWBImageManager.m in Sources */,
 				04C372D31F18BEC200191357 /* UIView+Layout.m in Sources */,
