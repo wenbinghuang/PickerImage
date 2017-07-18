@@ -15,6 +15,8 @@
 #import "AssetCollectionViewCell.h"
 #import "UIView+Layout.h"
 #import "VideoPlayerController.h"
+#import "GifPhotoViewController.h"
+#import "PhotoPreviewController.h"
 
 @interface PhotoPickerController () <UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
     NSMutableArray <HWBAssetModel *>*_models;
@@ -273,6 +275,7 @@ static CGSize AssetGridThumbnailSize;
     }
     HWBAssetModel *model = _models[index];
     if (model.type == HWBAssetModelMediaTypeVideo) {
+        
         if (imagePickerVC.selectedModels.count > 0) {
              [imagePickerVC showAlertWithTitle:[NSString localizedStringfForKey:@"Can not choose both video and photo"]];
         } else {
@@ -280,6 +283,82 @@ static CGSize AssetGridThumbnailSize;
             videoPlayerVc.model = model;
             [self.navigationController pushViewController:videoPlayerVc animated:YES];
         }
+        
+    } else if (model.type == HWBAssetModelMediaTypePhotoGif && imagePickerVC.allowPickingGif) {
+    
+        if (imagePickerVC.selectedModels.count > 0) {
+            [imagePickerVC showAlertWithTitle:[NSString localizedStringfForKey:@"Can not choose both photo and GIF"]];
+        } else {
+            GifPhotoViewController *gifPreViewVC = [[GifPhotoViewController alloc] init];
+            gifPreViewVC.model = model;
+            [self.navigationController pushViewController:gifPreViewVC animated:YES];
+        }
+    } else {
+        PhotoPreviewController *photoPreviewVc = [[PhotoPreviewController alloc] init];
+        photoPreviewVc.currentIndex = index;
+        photoPreviewVc.models = _models;
+        [self pushPhotoPrevireViewController:photoPreviewVc];
+    }
+}
+
+- (void)pushPhotoPrevireViewController:(PhotoPreviewController *)photoPreviewVC {
+    __weak typeof(self) weakSelf = self;
+    photoPreviewVC.isSelectOriginalPhoto = _isSelecOriginalPhoto;
+    
+    [photoPreviewVC setBackButtonClickBlock:^(BOOL isSelectOriginalPhoto) {
+        weakSelf.isSelecOriginalPhoto = isSelectOriginalPhoto;
+        [weakSelf.collectionView reloadData];
+        [weakSelf refreshBottomToolBarStatus];
+    }];
+    
+    [photoPreviewVC setDoneButtonClickBlock:^(BOOL isSelectOriginalPhoto) {
+        weakSelf.isSelecOriginalPhoto = isSelectOriginalPhoto;
+        [weakSelf doneButtonClick];
+    }];
+    
+    
+    [photoPreviewVC setDoneButtonClickBlockCropMode:^(UIImage *cropedImage, id asset) {
+        
+    }];
+    [self.navigationController pushViewController:photoPreviewVC animated:YES];
+}
+
+- (void)doneButtonClick {
+
+}
+
+- (void)didGetAllPhotos:(NSArray *)photos assets:(NSArray *)assets infoArr:(NSArray *)infoArr {
+    ImagePickerViewController *imagePickerVc = (ImagePickerViewController *)self.navigationController;
+    [imagePickerVc hideProgressHUD];
+    
+    if (imagePickerVc.autoDismiss) {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        [self callDelegateMethodWithPhotos:photos assets:assets infoArr:infoArr];
+    }];
+        
+    } else {
+        [self callDelegateMethodWithPhotos:photos assets:assets infoArr:infoArr];
+    }
+}
+
+- (void)callDelegateMethodWithPhotos:(NSArray *)photos assets:(NSArray *)assets infoArr:(NSArray *)infoArr {
+    ImagePickerViewController *imagePickerVC = (ImagePickerViewController *)self.navigationController;
+    
+    if ([imagePickerVC.pickerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:)]) {
+        [imagePickerVC.pickerDelegate imagePickerController:imagePickerVC didFinishPickingPhotos:photos sourceAssets:assets isSelectOriginalPhoto:_isSelecOriginalPhoto];
+    }
+    
+    if ([imagePickerVC.pickerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:infos:)]) {
+        [imagePickerVC.pickerDelegate imagePickerController:imagePickerVC didFinishPickingPhotos:photos sourceAssets:assets isSelectOriginalPhoto:_isSelecOriginalPhoto infos:infoArr];
+    }
+    
+    
+    if (imagePickerVC.didFinishPickingPhotosHandle) {
+        imagePickerVC.didFinishPickingPhotosHandle(photos, assets, _isSelecOriginalPhoto);
+    }
+    
+    if (imagePickerVC.didFinishPickingPhotosWithInfosHandle) {
+        imagePickerVC.didFinishPickingPhotosWithInfosHandle(photos, assets, _isSelecOriginalPhoto, infoArr);
     }
 }
 
@@ -297,7 +376,7 @@ static CGSize AssetGridThumbnailSize;
             }
             [self presentViewController: self.imagePickerVc animated:YES completion:nil];
         } else {
-        NSLog(@"模拟器中无法打开照相机,请在真机中使用");
+            NSLog(@"模拟器中无法打开照相机,请在真机中使用");
         }
     }
 }
