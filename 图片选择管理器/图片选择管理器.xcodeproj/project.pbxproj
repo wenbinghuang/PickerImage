@@ -14,6 +14,8 @@
 		04E680841F161E4F0030D28B /* AssetCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E680831F161E4F0030D28B /* AssetCollectionViewCell.m */; };
 		04E695471F1D998900996B6F /* GifPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E695461F1D998900996B6F /* GifPhotoViewController.m */; };
 		04E6954A1F1D9DD500996B6F /* PhotoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E695491F1D9DD500996B6F /* PhotoPreviewController.m */; };
+		04E6954D1F1DE8C400996B6F /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6954C1F1DE8C400996B6F /* ProgressView.m */; };
+		04E695501F1DEF3000996B6F /* PhotoPreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6954F1F1DEF3000996B6F /* PhotoPreviewCell.m */; };
 		04E6DFFD1F0E274A00343FAC /* HWBImageCropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6DFFC1F0E274A00343FAC /* HWBImageCropManager.m */; };
 		04EAE4761F1330CD00D271BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04EAE4781F1330CD00D271BE /* Localizable.strings */; };
 		04EAE47C1F133FE700D271BE /* ImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EAE47B1F133FE700D271BE /* ImagePickerViewController.m */; };
@@ -53,6 +55,10 @@
 		04E695461F1D998900996B6F /* GifPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifPhotoViewController.m; sourceTree = "<group>"; };
 		04E695481F1D9DD500996B6F /* PhotoPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPreviewController.h; sourceTree = "<group>"; };
 		04E695491F1D9DD500996B6F /* PhotoPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPreviewController.m; sourceTree = "<group>"; };
+		04E6954B1F1DE8C400996B6F /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+		04E6954C1F1DE8C400996B6F /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		04E6954E1F1DEF3000996B6F /* PhotoPreviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPreviewCell.h; sourceTree = "<group>"; };
+		04E6954F1F1DEF3000996B6F /* PhotoPreviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPreviewCell.m; sourceTree = "<group>"; };
 		04E6DFFB1F0E274A00343FAC /* HWBImageCropManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWBImageCropManager.h; sourceTree = "<group>"; };
 		04E6DFFC1F0E274A00343FAC /* HWBImageCropManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWBImageCropManager.m; sourceTree = "<group>"; };
 		04EAE4721F13303600D271BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -122,6 +128,10 @@
 			children = (
 				04EC45611F0A1C320086C42D /* AppDelegate.h */,
 				04EC45621F0A1C320086C42D /* AppDelegate.m */,
+				04E6954B1F1DE8C400996B6F /* ProgressView.h */,
+				04E6954C1F1DE8C400996B6F /* ProgressView.m */,
+				04E6954E1F1DEF3000996B6F /* PhotoPreviewCell.h */,
+				04E6954F1F1DEF3000996B6F /* PhotoPreviewCell.m */,
 				04EAE47A1F133FE700D271BE /* ImagePickerViewController.h */,
 				04EAE47B1F133FE700D271BE /* ImagePickerViewController.m */,
 				04E1303D1F14B89E00574FD7 /* PhotoPickerController.h */,
@@ -285,8 +295,10 @@
 				04E125AB1F1CB45400C88330 /* VideoPlayerController.m in Sources */,
 				04EC45891F0A1FDE0086C42D /* HWBAssetModel.m in Sources */,
 				04EC45861F0A1EFC0086C42D /* HWBImageManager.m in Sources */,
+				04E695501F1DEF3000996B6F /* PhotoPreviewCell.m in Sources */,
 				04E6954A1F1D9DD500996B6F /* PhotoPreviewController.m in Sources */,
 				04E695471F1D998900996B6F /* GifPhotoViewController.m in Sources */,
+				04E6954D1F1DE8C400996B6F /* ProgressView.m in Sources */,
 				04C372D31F18BEC200191357 /* UIView+Layout.m in Sources */,
 				04EAE47C1F133FE700D271BE /* ImagePickerViewController.m in Sources */,
 				04E6DFFD1F0E274A00343FAC /* HWBImageCropManager.m in Sources */,

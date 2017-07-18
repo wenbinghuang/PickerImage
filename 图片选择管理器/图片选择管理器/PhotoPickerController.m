@@ -318,7 +318,7 @@ static CGSize AssetGridThumbnailSize;
     
     
     [photoPreviewVC setDoneButtonClickBlockCropMode:^(UIImage *cropedImage, id asset) {
-        
+        [weakSelf didGetAllPhotos:@[cropedImage] assets:@[asset] infoArr:nil];
     }];
     [self.navigationController pushViewController:photoPreviewVC animated:YES];
 }
