@@ -131,7 +131,23 @@
 
 
 - (void)setAsset:(id)asset {
-
+    _asset = asset;
+    [[HWBImageManager manager] getPhotoWithAsset:asset networkAccessAllowed:YES completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+        self.imageView.image = photo;
+        [self resizeSubviews];
+        _progressView.hidden = YES;
+        if (self.imageProgressUpdateBlock) {
+            self.imageProgressUpdateBlock(1);
+        }
+    } progressHandler:^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
+        _progressView.hidden = NO;
+        [self bringSubviewToFront:_progressView];
+        progress = progress > 0.02 ? progress : 0.02;
+        _progressView.progress = progress;
+        if (self.imageProgressUpdateBlock) {
+            self.imageProgressUpdateBlock(progress);
+        }
+    }];
 }
 
 
@@ -164,6 +180,7 @@
     _imageContainerView.frame = tempRect;
     
     UIImage *image = self.imageView.image;
+    ///是否图形横着
     if (image.size.height / image.size.width > self.frame.size.height / self.scrollView.frame.size.width) {
         
         tempRect = _imageContainerView.frame;
@@ -213,8 +230,33 @@
         } else {
             _scrollView.contentInset = UIEdgeInsetsZero;
         }
-        
     }
+}
+
+
+- (void)refreshImageContainerViewCenter {
+    CGFloat offsetX = (_scrollView.frame.size.width > _scrollView.contentSize.width) ? ((_scrollView.frame.size.width - _scrollView.contentSize.width) * 0.5) : 0.0;
+    CGFloat offsetY = (_scrollView.frame.size.height > _scrollView.contentSize.height) ? ((_scrollView.frame.size.height - _scrollView.contentSize.height) * 0.5) : 0.0;
+    self.imageContainerView.center = CGPointMake(_scrollView.contentSize.width * 0.5 + offsetX, _scrollView.contentSize.height * 0.5 + offsetY);
+    
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return _imageContainerView;
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+    scrollView.contentInset = UIEdgeInsetsZero;
+}
+
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    [self refreshImageContainerViewCenter];
+}
+
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+    [self refreshScrollViewContentSize];
 }
 
 @end
